@@ -1,7 +1,15 @@
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { get } from '../api';
-import { Card, Pill, SectionHead, Empty, relative, roleLabel } from '../components/UI';
+import {
+  Card,
+  Pill,
+  SectionHead,
+  Empty,
+  relative,
+  roleLabel
+} from '../components/UI';
 
 const roleMeta = {
   student: {
@@ -15,12 +23,29 @@ const roleMeta = {
       { key: 'challenges', label: 'Open Challenges', icon: '◇', path: '/challenges' }
     ],
     focus: [
-      { title: 'Idea Lab', desc: 'Publish a problem statement or refine existing ideas.', path: '/ideas' },
-      { title: 'Collaborative Projects', desc: 'Work with peers on Kanban boards and issue tracking.', path: '/projects' },
-      { title: 'Mentor Network', desc: 'Connect with seasoned industry veterans for 1-on-1 guidance.', path: '/mentors' },
-      { title: 'Innovation Challenges', desc: 'Solve sponsored challenges and win awards.', path: '/challenges' }
+      {
+        title: 'Idea Lab',
+        desc: 'Publish a problem statement or refine existing ideas.',
+        path: '/ideas'
+      },
+      {
+        title: 'Collaborative Projects',
+        desc: 'Work with peers on Kanban boards and issue tracking.',
+        path: '/projects'
+      },
+      {
+        title: 'Mentor Network',
+        desc: 'Connect with seasoned industry veterans for 1-on-1 guidance.',
+        path: '/mentors'
+      },
+      {
+        title: 'Innovation Challenges',
+        desc: 'Solve sponsored challenges and win awards.',
+        path: '/challenges'
+      }
     ]
   },
+
   mentor: {
     eyebrow: 'MENTOR WORKSPACE',
     title: 'Empower student founders',
@@ -32,12 +57,29 @@ const roleMeta = {
       { key: 'challenges', label: 'Active Challenges', icon: '◇', path: '/challenges' }
     ],
     focus: [
-      { title: 'Mentorship Requests', desc: 'Review and accept pending guidance requests from founders.', path: '/requests' },
-      { title: 'Advisory Sessions', desc: 'Schedule check-ins and document action items.', path: '/sessions' },
-      { title: 'Startup Evaluations', desc: 'Score founder readiness across 8 core product and business vectors.', path: '/evaluations' },
-      { title: 'Startup Directory', desc: 'Discover high-potential university startups.', path: '/startups' }
+      {
+        title: 'Mentorship Requests',
+        desc: 'Review and accept pending guidance requests from founders.',
+        path: '/requests'
+      },
+      {
+        title: 'Advisory Sessions',
+        desc: 'Schedule check-ins and document action items.',
+        path: '/sessions'
+      },
+      {
+        title: 'Startup Evaluations',
+        desc: 'Score founder readiness across 8 core product and business vectors.',
+        path: '/evaluations'
+      },
+      {
+        title: 'Startup Directory',
+        desc: 'Discover high-potential university startups.',
+        path: '/startups'
+      }
     ]
   },
+
   startup: {
     eyebrow: 'FOUNDER CONTROL CENTER',
     title: 'Scale your venture',
@@ -49,12 +91,29 @@ const roleMeta = {
       { key: 'mentorships', label: 'Advisor Sessions', icon: '♙', path: '/mentors' }
     ],
     focus: [
-      { title: 'Startup Profile & Metrics', desc: 'Keep traction, revenue, and funding requirements updated.', path: '/startups' },
-      { title: 'Incubation Programs', desc: 'Apply to top cohorts and university innovation accelerators.', path: '/incubators' },
-      { title: 'Fundraising & Deal Room', desc: 'Manage your pitch deck, cap table, and investor diligence folder.', path: '/fundraising' },
-      { title: 'Founder Support', desc: 'Request legal, cloud credits, or technical infrastructure support.', path: '/support' }
+      {
+        title: 'Startup Profile & Metrics',
+        desc: 'Keep traction, revenue, and funding requirements updated.',
+        path: '/startups'
+      },
+      {
+        title: 'Incubation Programs',
+        desc: 'Apply to top cohorts and university innovation accelerators.',
+        path: '/incubators'
+      },
+      {
+        title: 'Fundraising & Deal Room',
+        desc: 'Manage your pitch deck, cap table, and investor diligence folder.',
+        path: '/fundraising'
+      },
+      {
+        title: 'Founder Support',
+        desc: 'Request legal, cloud credits, or technical infrastructure support.',
+        path: '/support'
+      }
     ]
   },
+
   investor: {
     eyebrow: 'INVESTOR DEAL ROOM',
     title: 'Back top university innovation',
@@ -66,12 +125,29 @@ const roleMeta = {
       { key: 'users', label: 'Ecosystem Founders', icon: '♟', path: '/startups' }
     ],
     focus: [
-      { title: 'Discover Startups', desc: 'Filter companies matching your sector thesis and check size.', path: '/startups' },
-      { title: 'Deal Flow Pipeline', desc: 'Move deals from Screening to Term Sheet and Investment.', path: '/deals' },
-      { title: 'Due Diligence Room', desc: 'Review financial summaries, legal incorporation, and product tech.', path: '/due-diligence' },
-      { title: 'Portfolio Management', desc: 'Track ownership percentages, runway, and revenue growth.', path: '/portfolio' }
+      {
+        title: 'Discover Startups',
+        desc: 'Filter companies matching your sector thesis and check size.',
+        path: '/startups'
+      },
+      {
+        title: 'Deal Flow Pipeline',
+        desc: 'Move deals from Screening to Term Sheet and Investment.',
+        path: '/deals'
+      },
+      {
+        title: 'Due Diligence Room',
+        desc: 'Review financial summaries, legal incorporation, and product tech.',
+        path: '/due-diligence'
+      },
+      {
+        title: 'Portfolio Management',
+        desc: 'Track ownership percentages, runway, and revenue growth.',
+        path: '/portfolio'
+      }
     ]
   },
+
   incubator: {
     eyebrow: 'INCUBATOR OPERATIONS',
     title: 'Accelerate the next cohort',
@@ -83,12 +159,29 @@ const roleMeta = {
       { key: 'challenges', label: 'Campus Challenges', icon: '◇', path: '/challenges' }
     ],
     focus: [
-      { title: 'Incubation Programs', desc: 'Create and launch cohorts with customized eligibility rules.', path: '/programs' },
-      { title: 'Application Review', desc: 'Screen, shortlist, and interview applicants through structured stages.', path: '/applications' },
-      { title: 'Cohort Management', desc: 'Track startup milestones and founder-mentor pairings.', path: '/cohorts' },
-      { title: 'Innovation Challenges', desc: 'Post problem statements for student solvers.', path: '/challenges' }
+      {
+        title: 'Incubation Programs',
+        desc: 'Create and launch cohorts with customized eligibility rules.',
+        path: '/programs'
+      },
+      {
+        title: 'Application Review',
+        desc: 'Screen, shortlist, and interview applicants through structured stages.',
+        path: '/applications'
+      },
+      {
+        title: 'Cohort Management',
+        desc: 'Track startup milestones and founder-mentor pairings.',
+        path: '/cohorts'
+      },
+      {
+        title: 'Innovation Challenges',
+        desc: 'Post problem statements for student solvers.',
+        path: '/challenges'
+      }
     ]
   },
+
   admin: {
     eyebrow: 'ADMINISTRATION & COMPLIANCE',
     title: 'Ecosystem health & governance',
@@ -100,61 +193,143 @@ const roleMeta = {
       { key: 'projects', label: 'Projects Built', icon: '▣', path: '/projects' }
     ],
     focus: [
-      { title: 'User Verification', desc: 'Review and approve university founder and mentor identities.', path: '/users' },
-      { title: 'Program & Deal Oversight', desc: 'Audit incubation applications and investor negotiations.', path: '/deals' },
-      { title: 'Audit Trail', desc: 'Inspect chronological database audit logs for all critical actions.', path: '/audit' },
-      { title: 'Ecosystem Directory', desc: 'Manage all platform entities and relational associations.', path: '/startups' }
+      {
+        title: 'User Verification',
+        desc: 'Review and approve university founder and mentor identities.',
+        path: '/users'
+      },
+      {
+        title: 'Program & Deal Oversight',
+        desc: 'Audit incubation applications and investor negotiations.',
+        path: '/deals'
+      },
+      {
+        title: 'Audit Trail',
+        desc: 'Inspect chronological database audit logs for all critical actions.',
+        path: '/audit'
+      },
+      {
+        title: 'Ecosystem Directory',
+        desc: 'Manage all platform entities and relational associations.',
+        path: '/startups'
+      }
     ]
   }
 };
 
 export default function Dashboard() {
   const nav = useNavigate();
+
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const role = user.role || 'student';
   const meta = roleMeta[role] || roleMeta.student;
 
   const [counts, setCounts] = useState({});
   const [notes, setNotes] = useState([]);
-  const [loading, setLoading] = useState(true);
+
+  // Separate loading states so one API call
+  // does not block the rest of the dashboard.
+  const [countsLoading, setCountsLoading] = useState(true);
+  const [notesLoading, setNotesLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([
-      get('/dashboard').then(setCounts).catch(() => {}),
-      get('/notifications').then(setNotes).catch(() => {})
-    ]).finally(() => setLoading(false));
+    let active = true;
+
+    // Load dashboard counts independently.
+    get('/dashboard')
+      .then(data => {
+        if (active) {
+          setCounts(data || {});
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setCounts({});
+        }
+      })
+      .finally(() => {
+        if (active) {
+          setCountsLoading(false);
+        }
+      });
+
+    // Load notifications independently.
+    get('/notifications')
+      .then(data => {
+        if (active) {
+          setNotes(Array.isArray(data) ? data : []);
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setNotes([]);
+        }
+      })
+      .finally(() => {
+        if (active) {
+          setNotesLoading(false);
+        }
+      });
+
+    // Prevent state updates if the user leaves
+    // the dashboard before the requests finish.
+    return () => {
+      active = false;
+    };
   }, [role]);
 
   return (
     <div className="page">
+
+      {/* Page Header */}
       <div className="page-head">
         <div>
           <span className="eyebrow">{meta.eyebrow}</span>
-          <h1>Welcome, {user.name ? user.name.split(' ')[0] : 'Innovator'}! 👋</h1>
+
+          <h1>
+            Welcome,{' '}
+            {user.name
+              ? user.name.split(' ')[0]
+              : 'Innovator'}! 👋
+          </h1>
+
           <p>{meta.sub}</p>
         </div>
       </div>
 
-      {/* Ecosystem Lifecycle Roadmap Banner */}
+      {/* Ecosystem Lifecycle Roadmap */}
       <div className="hero-banner">
         <div>
           <Pill>ECOSYSTEM ROADMAP</Pill>
-          <h2>Idea <span>→</span> Project <span>→</span> Mentorship <span>→</span> Incubation <span>→</span> Investment <span>→</span> Scale</h2>
-          <p>Seamlessly move from early student idea to a fully funded venture in one connected platform.</p>
+
+          <h2>
+            Idea <span>→</span> Project <span>→</span> Mentorship{' '}
+            <span>→</span> Incubation <span>→</span> Investment{' '}
+            <span>→</span> Scale
+          </h2>
+
+          <p>
+            Seamlessly move from early student idea to a fully funded
+            venture in one connected platform.
+          </p>
         </div>
+
         <div className="hero-visual">
           <div className="mountain m1" />
           <div className="mountain m2" />
           <div className="sun" />
+
           <div className="person-figure">
-            ●<br />
-            <span>╱│╲</span><br />
+            ●
+            <br />
+            <span>╱│╲</span>
+            <br />
             <span>╱ ╲</span>
           </div>
         </div>
       </div>
 
-      {/* Live Workspace Signals (Dynamic Stats from DB) */}
+      {/* Live Workspace Signals */}
       <div className="stat-grid">
         {meta.stats.map((s, i) => (
           <Card
@@ -165,9 +340,18 @@ export default function Dashboard() {
             <div className={`stat-icon s${i % 4}`}>
               {s.icon}
             </div>
+
             <div>
               <span>{s.label}</span>
-              <strong>{counts[s.key] !== undefined ? counts[s.key] : (loading ? '...' : 0)}</strong>
+
+              <strong>
+                {counts[s.key] !== undefined
+                  ? counts[s.key]
+                  : countsLoading
+                    ? '...'
+                    : 0}
+              </strong>
+
               <small>live database record</small>
             </div>
           </Card>
@@ -175,12 +359,14 @@ export default function Dashboard() {
       </div>
 
       <div className="dashboard-grid">
+
         {/* Core Role Cockpit Workflows */}
         <Card>
           <SectionHead
             eyebrow="YOUR WORKSPACE"
             title="What matters now"
           />
+
           <div className="focus-list">
             {meta.focus.map((item, i) => (
               <button
@@ -189,18 +375,22 @@ export default function Dashboard() {
                 className="focus-row focus-button"
                 onClick={() => nav(item.path)}
               >
-                <div className="num">0{i + 1}</div>
+                <div className="num">
+                  0{i + 1}
+                </div>
+
                 <div>
                   <b>{item.title}</b>
                   <span>{item.desc}</span>
                 </div>
+
                 <span className="arrow">→</span>
               </button>
             ))}
           </div>
         </Card>
 
-        {/* Live Ecosystem Signals (Recent Activity / Notifications) */}
+        {/* Live Ecosystem Signals */}
         <Card>
           <SectionHead
             eyebrow="LIVE ECOSYSTEM SIGNALS"
@@ -215,47 +405,84 @@ export default function Dashboard() {
               </button>
             }
           />
+
           <div className="activity-list">
-            {notes.slice(0, 5).map((n, i) => (
-              <div
-                className="activity clickable"
-                key={n.id || i}
-                onClick={() => nav('/notifications')}
-              >
-                <span className={`activity-dot d${i % 5}`} />
-                <div>
-                  <b>{n.title}</b>
-                  <p>{n.message}</p>
-                  <small>{relative(n.created_at)}</small>
+
+            {notesLoading && (
+              <>
+                <div className="activity">
+                  <span className="activity-dot d0" />
+
+                  <div>
+                    <b>Loading recent activity...</b>
+                    <p>
+                      Fetching the latest ecosystem updates.
+                    </p>
+                    <small>Please wait...</small>
+                  </div>
                 </div>
-              </div>
-            ))}
-            {!notes.length && (
+              </>
+            )}
+
+            {!notesLoading &&
+              notes.slice(0, 5).map((n, i) => (
+                <div
+                  className="activity clickable"
+                  key={n.id || i}
+                  onClick={() => nav('/notifications')}
+                >
+                  <span className={`activity-dot d${i % 5}`} />
+
+                  <div>
+                    <b>{n.title}</b>
+                    <p>{n.message}</p>
+                    <small>
+                      {relative(n.created_at)}
+                    </small>
+                  </div>
+                </div>
+              ))}
+
+            {!notesLoading && !notes.length && (
               <Empty
                 title="No recent notifications"
                 text="As you collaborate and move projects forward, updates will appear here."
               />
             )}
+
           </div>
         </Card>
       </div>
 
       {/* Lower Dashboard Grid */}
-      <div className="dashboard-grid lower" style={{ marginTop: '16px' }}>
+      <div
+        className="dashboard-grid lower"
+        style={{ marginTop: '16px' }}
+      >
+
+        {/* Quick Workflow Shortcuts */}
         <Card>
           <SectionHead
             eyebrow="QUICK WORKFLOW SHORTCUTS"
             title="Jump straight into action"
           />
+
           <div className="recommendations">
             {meta.focus.slice(0, 3).map(item => (
-              <div className="recommend" key={item.title}>
-                <div className="recommend-avatar">{item.title[0]}</div>
+              <div
+                className="recommend"
+                key={item.title}
+              >
+                <div className="recommend-avatar">
+                  {item.title[0]}
+                </div>
+
                 <div>
                   <b>{item.title}</b>
                   <span>{roleLabel(role)}</span>
                   <p>{item.desc}</p>
                 </div>
+
                 <button
                   type="button"
                   onClick={() => nav(item.path)}
@@ -268,14 +495,23 @@ export default function Dashboard() {
           </div>
         </Card>
 
+        {/* Project Vision */}
         <Card className="quote-card">
           <div className="quote-mark">“</div>
-          <h3>From Student Project to Seed-Funded Company.</h3>
+
+          <h3>
+            From Student Project to Seed-Funded Company.
+          </h3>
+
           <p>
-            LaunchLoop unifies relational DBMS workflows, role-based governance, and real-time collaboration into one complete ecosystem.
+            LaunchLoop unifies relational DBMS workflows,
+            role-based governance, and real-time collaboration
+            into one complete ecosystem.
           </p>
+
           <Pill>DEPLOY READY · 2026</Pill>
         </Card>
+
       </div>
     </div>
   );
