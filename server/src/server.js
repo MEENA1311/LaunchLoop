@@ -85,11 +85,10 @@ app.get('/api/health', (req, res) => {
   res.json({
     ok: true,
     service: 'startup-innovation-portal',
-    databaseDriver: getDbType(),
+    databaseDriver: 'mysql2',
     timestamp: new Date().toISOString()
   });
 });
-
 // -------------------------------------------------------------
 // 2. AUTHENTICATION & PROFILES
 // -------------------------------------------------------------
