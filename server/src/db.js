@@ -9,12 +9,21 @@ const DB_USER = process.env.DB_USER || 'root';
 const DB_PASSWORD = process.env.DB_PASSWORD || '';
 const DB_NAME = process.env.DB_NAME || 'startup_portal';
 
+const ssl =
+  process.env.DB_SSL_CA
+    ? {
+        ca: process.env.DB_SSL_CA,
+        rejectUnauthorized: true
+      }
+    : undefined;
+
 export const pool = mysql.createPool({
   host: DB_HOST,
   port: DB_PORT,
   user: DB_USER,
   password: DB_PASSWORD,
   database: DB_NAME,
+  ssl,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
